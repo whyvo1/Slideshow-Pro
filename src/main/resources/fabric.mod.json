@@ -14,7 +14,7 @@
 	"contact": {
 		"sources": "https://github.com/whyvo1/Slideshow-Pro/tree/1.16.5"
 	},
-	"license": "CC0-1.0",
+	"license": "ARR",
 	"icon": "assets/icon.png",
 	"environment": "*",
 	"entrypoints": {
