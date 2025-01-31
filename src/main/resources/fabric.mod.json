@@ -1,0 +1,40 @@
+{
+	"schemaVersion": 1,
+	"id": "slideshow",
+	"version": "${version}",
+	"name": "Slideshow",
+	"description": "A simple slideshow projector in Minecraft.",
+	"authors": [
+		"3TUSK",
+		"ustc_zzzz",
+		"BloCamLimb",
+		"Jonathan Ho",
+		"Whyvo"
+	],
+	"contact": {
+		"sources": "https://github.com/jonafanho/Slideshow"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"org.teacon.slides.Slideshow"
+		],
+		"client": [
+			"org.teacon.slides.SlideshowClient"
+		]
+	},
+	"mixins": [
+	],
+	"accessWidener" : "slide_show.accesswidener",
+	"depends": {
+		"fabricloader": ">=0.16.10",
+		"minecraft": "~1.16.4",
+		"java": ">=17",
+		"fabric": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
