@@ -1,0 +1,6 @@
+accessWidener v2 named
+accessible field net/minecraft/client/texture/NativeImage pointer J
+extendable class net/minecraft/client/render/RenderLayer$MultiPhase
+accessible method net/minecraft/client/render/RenderLayer$MultiPhase <init> (Ljava/lang/String;Lnet/minecraft/client/render/VertexFormat;Lnet/minecraft/client/render/VertexFormat$DrawMode;IZZLnet/minecraft/client/render/RenderLayer$MultiPhaseParameters;)V
+accessible field net/minecraft/client/render/RenderPhase beginAction Ljava/lang/Runnable;
+mutable field net/minecraft/client/render/RenderPhase beginAction Ljava/lang/Runnable;
