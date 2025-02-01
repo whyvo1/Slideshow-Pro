@@ -1,0 +1,36 @@
+{
+    "block.slide_show.projector": "Slideshow Projector",
+
+    "item.slide_show.flipper": "Flipper",
+    "item.slide_show.flipper.tooltip.bound": "Projector bound in [%s, %s, %s]",
+    "item.slide_show.flipper.tooltip.not_bound": "No projector bound",
+    "item.slide_show.flipper.tooltip.not_bound1": "Use on projector to bind it",
+    "info.slide_show.binding_lost": "Binding lost",
+    "item.slide_show.image": "Image",
+    "item.slide_show.image.tooltip.no_properties": "No properties",
+    "item.slide_show.image.tooltip.url": "Source: Link",
+    "item.slide_show.image.tooltip.id": "Source: ID",
+
+    "gui.slide_show.id": "Image Source: ID",
+    "gui.slide_show.url": "Image Source: Link",
+    "gui.slide_show.export": "Export Image Item",
+    "gui.slide_show.container": "Image Source: Container Block",
+    "gui.slide_show.color": "Slide Colour",
+    "gui.slide_show.width": "Slide Width",
+    "gui.slide_show.height": "Slide Height",
+    "gui.slide_show.offset_x": "Move Left / Right",
+    "gui.slide_show.offset_y": "Move Up / Down",
+    "gui.slide_show.offset_z": "Move Backwards / Forwards",
+    "gui.slide_show.flip": "Flip Horizontal",
+    "gui.slide_show.rotate": "Rotate Clockwise",
+    "gui.slide_show.single_double_sided": "Toggle Single-Sided / Double-Sided",
+
+    "gui.slide_show.section.image": "Image Properties",
+    "gui.slide_show.section.offset": "Slide Offset",
+    "gui.slide_show.section.others": "Others",
+
+    "info.slide_show.need_bound": "Please bind projector first",
+    "info.slide_show.bound_projector": "Bound",
+    "info.slide_show.slide_flipped": "Flipped",
+    "info.slide_show.initialized": "Initialized"
+}

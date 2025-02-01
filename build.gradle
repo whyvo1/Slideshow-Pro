@@ -1,0 +1,85 @@
+plugins {
+	id 'fabric-loom' version '1.9-SNAPSHOT'
+	id 'maven-publish'
+	id "com.github.johnrengelman.shadow" version "+"
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+	archivesName = project.archives_base_name
+}
+
+repositories {
+	maven { url 'https://jitpack.io' }
+	maven { url "https://maven.terraformersmc.com/releases/" }
+}
+
+apply plugin: "com.github.johnrengelman.shadow"
+
+configurations {
+	shadowImplementation
+	implementation.extendsFrom shadowImplementation
+}
+
+shadowJar {
+	configurations = [project.configurations.shadowImplementation]
+	relocate "org.apache.http.client.cache", "org.teacon.slides.http.client.cache"
+	relocate "org.apache.http.impl.client.cache", "org.teacon.slides.http.impl.client.cache"
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+	shadowImplementation "org.apache.httpcomponents:httpclient-cache:4.3.6"
+	shadowImplementation "io.github.darkxanter:webp-imageio:0.3.2"
+	
+}
+
+processResources {
+	inputs.property "version", project.version
+
+	filesMatching("fabric.mod.json") {
+		expand "version": project.version
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = 17
+}
+
+java {
+	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
+	// if it is present.
+	// If you remove this line, sources will not be generated.
+	withSourcesJar()
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
+}
+
+remapJar {
+	dependsOn(shadowJar)
+	mustRunAfter(shadowJar)
+	inputFile = file(shadowJar.archivePath)
+}
+
+loom {
+	accessWidenerPath = file("src/main/resources/slide_show.accesswidener")
+}
+
+tasks.register('copyTask') {
+	copy {
+		from "build/libs/slideshow-${project.mod_version}.jar"
+		into "build/release/"
+		rename "slideshow-${project.mod_version}.jar", "slideshow_pro-fabric-${project.minecraft_version}-${project.mod_version}.jar"
+	}
+}
