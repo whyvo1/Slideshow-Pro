@@ -1,0 +1,37 @@
+{
+    "block.slide_show.projector": "幻灯片投影仪",
+
+    "item.slide_show.flipper": "翻页笔",
+    "item.slide_show.flipper.tooltip.bound": "已绑定投影仪[%s, %s, %s]",
+    "item.slide_show.flipper.tooltip.not_bound": "未绑定投影仪",
+    "item.slide_show.flipper.tooltip.not_bound1": "对投影仪按使用键以绑定",
+    "info.slide_show.binding_lost": "绑定丢失",
+    "item.slide_show.image": "图片",
+    "item.slide_show.image.tooltip.no_properties": "无属性",
+    "item.slide_show.image.tooltip.url": "来源：链接",
+    "item.slide_show.image.tooltip.id": "来源：ID",
+    "item.slide_show.projector": "幻灯片投影仪",
+
+    "gui.slide_show.id": "图片来源：ID",
+    "gui.slide_show.url": "图片来源：链接",
+    "gui.slide_show.export": "导出图片物品",
+    "gui.slide_show.container": "图片来源：容器方块",
+    "gui.slide_show.color": "幻灯片颜色",
+    "gui.slide_show.width": "幻灯片宽度",
+    "gui.slide_show.height": "幻灯片高度",
+    "gui.slide_show.offset_x": "左右平移",
+    "gui.slide_show.offset_y": "上下平移",
+    "gui.slide_show.offset_z": "前后平移",
+    "gui.slide_show.flip": "水平翻转",
+    "gui.slide_show.rotate": "顺时针旋转",
+    "gui.slide_show.single_double_sided": "切换单面/双面",
+
+    "gui.slide_show.section.image": "图片属性",
+    "gui.slide_show.section.offset": "幻灯片平移",
+    "gui.slide_show.section.others": "其他",
+
+    "info.slide_show.need_bound": "请先绑定投影仪",
+    "info.slide_show.bound_projector": "已绑定",
+    "info.slide_show.slide_flipped": "已翻页",
+    "info.slide_show.initialized": "已初始化"
+}
