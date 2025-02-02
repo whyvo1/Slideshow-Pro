@@ -25,6 +25,7 @@ public class SlideRenderType extends RenderLayer.MultiPhase {
 						.texturing(DEFAULT_TEXTURING)
 						.writeMaskState(ALL_MASK)
 						.lineWidth(FULL_LINE_WIDTH)
+						.colorLogic(NO_COLOR_LOGIC)
 						.build(true));
 		Runnable baseAction = this.beginAction;
 		this.beginAction = () -> {
@@ -48,6 +49,7 @@ public class SlideRenderType extends RenderLayer.MultiPhase {
 						.texturing(DEFAULT_TEXTURING)
 						.writeMaskState(ALL_MASK)
 						.lineWidth(FULL_LINE_WIDTH)
+						.colorLogic(NO_COLOR_LOGIC)
 						.build(true));
 		Runnable baseAction = this.beginAction;
 		this.beginAction = () -> {
