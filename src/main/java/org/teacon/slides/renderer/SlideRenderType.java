@@ -14,7 +14,7 @@ public class SlideRenderType extends RenderLayer.MultiPhase {
 		super(Slideshow.ID, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL,
 				VertexFormat.DrawMode.QUADS, 256, false, true,
 				MultiPhaseParameters.builder()
-						.program(CUTOUT_PROGRAM)
+						.program(TRANSPARENT_TEXT_PROGRAM)
 						.transparency(TRANSLUCENT_TRANSPARENCY)
 						.depthTest(LEQUAL_DEPTH_TEST)
 						.cull(ENABLE_CULLING)
@@ -25,6 +25,7 @@ public class SlideRenderType extends RenderLayer.MultiPhase {
 						.texturing(DEFAULT_TEXTURING)
 						.writeMaskState(ALL_MASK)
 						.lineWidth(FULL_LINE_WIDTH)
+						.colorLogic(NO_COLOR_LOGIC)
 						.build(true));
 		Runnable baseAction = this.beginAction;
 		this.beginAction = () -> {
@@ -37,7 +38,7 @@ public class SlideRenderType extends RenderLayer.MultiPhase {
 		super(Slideshow.ID + "_icon", VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL,
 				VertexFormat.DrawMode.QUADS, 256, false, true,
 				MultiPhaseParameters.builder()
-						.program(CUTOUT_PROGRAM)
+						.program(TRANSPARENT_TEXT_PROGRAM)
 						.transparency(TRANSLUCENT_TRANSPARENCY)
 						.depthTest(LEQUAL_DEPTH_TEST)
 						.cull(ENABLE_CULLING)
@@ -48,6 +49,7 @@ public class SlideRenderType extends RenderLayer.MultiPhase {
 						.texturing(DEFAULT_TEXTURING)
 						.writeMaskState(ALL_MASK)
 						.lineWidth(FULL_LINE_WIDTH)
+						.colorLogic(NO_COLOR_LOGIC)
 						.build(true));
 		Runnable baseAction = this.beginAction;
 		this.beginAction = () -> {
