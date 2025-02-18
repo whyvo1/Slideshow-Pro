@@ -14,7 +14,7 @@
 	"contact": {
 		"sources": "https://github.com/whyvo1/Slideshow-Pro"
 	},
-	"license": "ARR",
+	"license": "BSD 3-Clause",
 	"icon": "assets/icon.png",
 	"environment": "*",
 	"entrypoints": {
