@@ -2,7 +2,7 @@
 	"schemaVersion": 1,
 	"id": "slideshow",
 	"version": "${version}",
-	"name": "Slideshow",
+	"name": "Slideshow Pro",
 	"description": "A simple slideshow projector in Minecraft.",
 	"authors": [
 		"3TUSK",
@@ -14,7 +14,7 @@
 	"contact": {
 		"sources": "https://github.com/whyvo1/Slideshow-Pro/tree/1.16.5"
 	},
-	"license": "ARR",
+	"license": "BSD 3-Clause",
 	"icon": "assets/icon.png",
 	"environment": "*",
 	"entrypoints": {

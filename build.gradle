@@ -97,6 +97,6 @@ tasks.register('copyTask') {
 	copy {
 		from "build/libs/slideshow-${project.mod_version}.jar"
 		into "build/release/"
-		rename "slideshow-${project.mod_version}.jar", "slideshow-fabric-${project.minecraft_version}-${project.mod_version}.jar"
+		rename "slideshow-${project.mod_version}.jar", "slideshow_pro-fabric-${project.minecraft_version}-${project.mod_version}.jar"
 	}
 }
