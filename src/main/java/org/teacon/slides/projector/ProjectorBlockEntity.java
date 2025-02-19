@@ -11,6 +11,7 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -270,5 +271,10 @@ public final class ProjectorBlockEntity extends BlockEntity implements ExtendedS
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
 		buf.writeBlockPos(this.pos);
 		return new ProjectorScreenHandler(syncId, buf);
+	}
+
+	@Override
+	public @Nullable BlockEntityUpdateS2CPacket toUpdatePacket() {
+		return new BlockEntityUpdateS2CPacket(this.pos, 0, this.toInitialChunkDataNbt());
 	}
 }
