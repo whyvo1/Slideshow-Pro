@@ -2,6 +2,7 @@ package org.teacon.slides.network;
 
 import com.mojang.authlib.GameProfile;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.NbtCompound;
@@ -52,13 +53,18 @@ public final class ProjectorAfterUpdateC2SPayload implements CustomPayload {
 		MinecraftServer server = context.server();
 		server.execute(() -> {
 			ServerWorld level = player.getServerWorld();
-			BlockEntity blockEntity = level.getBlockEntity(payload.mPos);
+			BlockPos pos = payload.mPos;
+			BlockEntity blockEntity = level.getBlockEntity(pos);
 			// prevent remote chunk loading
-			if (ProjectorBlock.hasPermission(player) && level.isPosLoaded(payload.mPos) && blockEntity instanceof ProjectorBlockEntity blockEntity1) {
+			if (ProjectorBlock.hasPermission(player) && level.isPosLoaded(pos) && blockEntity instanceof ProjectorBlockEntity blockEntity1) {
 				BlockState state = blockEntity.getCachedState().with(ProjectorBlock.ROTATION, payload.mRotation);
 				blockEntity1.loadCompound(payload.mTag);
 				blockEntity1.needInitContainer = payload.mIC;
-				level.setBlockState(payload.mPos, state);
+
+				if(!level.setBlockState(pos, state, Block.NOTIFY_ALL)) {
+					level.updateListeners(pos, state, state, Block.NOTIFY_LISTENERS);
+				}
+
 				// mark chunk unsaved
 				blockEntity.markDirty();
 				return;
