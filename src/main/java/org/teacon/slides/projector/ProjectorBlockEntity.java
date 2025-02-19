@@ -1,6 +1,5 @@
 package org.teacon.slides.projector;
 
-import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -10,6 +9,9 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -24,6 +26,7 @@ import org.teacon.slides.Slideshow;
 import org.teacon.slides.network.ProjectorImageInfoS2CPayload;
 import org.teacon.slides.network.ProjectorOpenScreenPayload;
 import org.teacon.slides.util.RegistryServer;
+import org.teacon.slides.util.Utilities;
 
 @SuppressWarnings("ConstantConditions")
 public final class ProjectorBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory<ProjectorOpenScreenPayload> {
@@ -207,9 +210,7 @@ public final class ProjectorBlockEntity extends BlockEntity implements ExtendedS
 	}
 
 	public void sync() {
-		for(ServerPlayerEntity player : PlayerLookup.tracking(this)) {
-			RegistryServer.sendToPlayer(player, new ProjectorImageInfoS2CPayload(this));
-		}
+		Utilities.forPlayersTacking(this, player -> RegistryServer.sendToPlayer(player, new ProjectorImageInfoS2CPayload(this)));
 	}
 
 	public static void tick(World world, BlockPos pos, ProjectorBlockEntity entity) {
@@ -273,5 +274,10 @@ public final class ProjectorBlockEntity extends BlockEntity implements ExtendedS
 	@Override
 	public ProjectorOpenScreenPayload getScreenOpeningData(ServerPlayerEntity serverPlayerEntity) {
 		return new ProjectorOpenScreenPayload(this.pos);
+	}
+
+	@Override
+	public @Nullable Packet<ClientPlayPacketListener> toUpdatePacket() {
+		return BlockEntityUpdateS2CPacket.create(this);
 	}
 }
