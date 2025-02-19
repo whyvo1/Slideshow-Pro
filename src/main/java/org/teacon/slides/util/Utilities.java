@@ -2,8 +2,6 @@ package org.teacon.slides.util;
 
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
