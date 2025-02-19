@@ -2,6 +2,7 @@ package org.teacon.slides.network;
 
 import com.mojang.authlib.GameProfile;
 import io.netty.buffer.Unpooled;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.NbtCompound;
@@ -52,12 +53,18 @@ public final class ProjectorAfterUpdateC2SPacket {
 		minecraftServer.execute(() -> {
 			ServerWorld level = player.getServerWorld();
 			BlockEntity blockEntity = level.getBlockEntity(projectorAfterUpdatePacket.mPos);
+			BlockPos pos = projectorAfterUpdatePacket.mPos;
 			// prevent remote chunk loading
-			if (ProjectorBlock.hasPermission(player) && level.canSetBlock(projectorAfterUpdatePacket.mPos) && blockEntity instanceof ProjectorBlockEntity blockEntity1) {
+			if (ProjectorBlock.hasPermission(player) && level.canSetBlock(pos) && blockEntity instanceof ProjectorBlockEntity blockEntity1) {
 				BlockState state = blockEntity.getCachedState().with(ProjectorBlock.ROTATION, projectorAfterUpdatePacket.mRotation);
                 blockEntity1.loadCompound(projectorAfterUpdatePacket.mTag);
 				blockEntity1.needInitContainer = projectorAfterUpdatePacket.mBoolean;
-				level.setBlockState(projectorAfterUpdatePacket.mPos, state);
+				level.setBlockState(pos, state);
+
+				if(!level.setBlockState(pos, state, Block.NOTIFY_ALL)) {
+					level.updateListeners(pos, state, state, Block.NOTIFY_LISTENERS);
+				}
+
 				// mark chunk unsaved
 				blockEntity.markDirty();
 				return;
@@ -66,4 +73,5 @@ public final class ProjectorAfterUpdateC2SPacket {
 			Slideshow.LOGGER.debug(Utilities.MARKER, "Received illegal packet for projector update: player = {}, pos = {}", profile, projectorAfterUpdatePacket.mPos);
 		});
 	}
+
 }

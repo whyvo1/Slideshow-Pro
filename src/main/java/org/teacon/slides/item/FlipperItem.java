@@ -98,7 +98,6 @@ public class FlipperItem extends Item {
         if(trySendFlip(world, player, itemStack, false, player.isSneaking())){
             return TypedActionResult.success(itemStack, true);
         }
-
         return TypedActionResult.fail(itemStack);
     }
 
