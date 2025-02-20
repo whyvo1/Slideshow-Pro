@@ -1,6 +1,7 @@
 package org.teacon.slides.projector;
 
 import io.netty.buffer.Unpooled;
+import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -11,7 +12,6 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -26,7 +26,7 @@ import org.teacon.slides.Slideshow;
 import org.teacon.slides.network.ProjectorImageInfoS2CPacket;
 
 @SuppressWarnings("ConstantConditions")
-public final class ProjectorBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory {
+public final class ProjectorBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory, BlockEntityClientSerializable {
 	public SourceType mSourceType = SourceType.URL;
 	public String mLocation = "";
 	public int mColor = ~0;
@@ -204,7 +204,7 @@ public final class ProjectorBlockEntity extends BlockEntity implements ExtendedS
 		mCNextLocation = compoundTag.getString("CNextLocation");
 	}
 
-	public void sync() {
+	public void synch() {
 		new ProjectorImageInfoS2CPacket(this).sendToClient((ServerWorld) this.world);
 	}
 
@@ -227,7 +227,7 @@ public final class ProjectorBlockEntity extends BlockEntity implements ExtendedS
 			entity.handleReadImage(false);
 			entity.needInitContainer = false;
 			entity.markDirty();
-			entity.sync();
+			entity.synch();
 			return;
 		}
 		if(entity.needHandleReadImage) {
@@ -238,7 +238,7 @@ public final class ProjectorBlockEntity extends BlockEntity implements ExtendedS
 			}
 			entity.handleReadImage(entity.flipBack);
 			entity.markDirty();
-			entity.sync();
+			entity.synch();
 			entity.needHandleReadImage = false;
 			entity.flipBack = false;
 		}
@@ -274,7 +274,13 @@ public final class ProjectorBlockEntity extends BlockEntity implements ExtendedS
 	}
 
 	@Override
-	public @Nullable BlockEntityUpdateS2CPacket toUpdatePacket() {
-		return new BlockEntityUpdateS2CPacket(this.pos, 0, this.toInitialChunkDataNbt());
+	public void fromClientTag(NbtCompound nbtCompound) {
+		this.loadCompound(nbtCompound);
+	}
+
+	@Override
+	public NbtCompound toClientTag(NbtCompound nbtCompound) {
+		this.saveCompound(nbtCompound);
+		return nbtCompound;
 	}
 }
