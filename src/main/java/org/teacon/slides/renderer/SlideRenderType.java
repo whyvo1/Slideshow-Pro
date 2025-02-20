@@ -10,6 +10,8 @@ import net.minecraft.util.Identifier;
 
 public class SlideRenderType extends RenderLayer.MultiPhase {
 
+	private static final String ID_ICON = Slideshow.ID + "icon";
+
 	public SlideRenderType(int texture) {
 		super(Slideshow.ID, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL,
 				VertexFormat.DrawMode.QUADS, 256, false, true,
@@ -35,7 +37,7 @@ public class SlideRenderType extends RenderLayer.MultiPhase {
 	}
 
 	SlideRenderType(Identifier texture) {
-		super(Slideshow.ID + "_icon", VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL,
+		super(ID_ICON, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL,
 				VertexFormat.DrawMode.QUADS, 256, false, true,
 				MultiPhaseParameters.builder()
 						.program(TRANSPARENT_TEXT_PROGRAM)
