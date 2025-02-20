@@ -55,12 +55,10 @@ public final class ProjectorAfterUpdateC2SPacket {
 			BlockPos pos = projectorAfterUpdatePacket.mPos;
 			BlockEntity blockEntity = level.getBlockEntity(pos);
 			// prevent remote chunk loading
-			if (ProjectorBlock.hasPermission(player) && level.canSetBlock(pos) && blockEntity instanceof ProjectorBlockEntity) {
+			if (ProjectorBlock.hasPermission(player) && level.canSetBlock(pos) && blockEntity instanceof ProjectorBlockEntity blockEntity1) {
 				BlockState state = blockEntity.getCachedState().with(ProjectorBlock.ROTATION, projectorAfterUpdatePacket.mRotation);
-				ProjectorBlockEntity blockEntity1 = (ProjectorBlockEntity) blockEntity;
-				blockEntity1.loadCompound(projectorAfterUpdatePacket.mTag);
+                blockEntity1.loadCompound(projectorAfterUpdatePacket.mTag);
 				blockEntity1.needInitContainer = projectorAfterUpdatePacket.mBoolean;
-				level.setBlockState(pos, state);
 
 				if(!level.setBlockState(pos, state, Block.NOTIFY_ALL)) {
 					level.updateListeners(pos, state, state, Block.NOTIFY_LISTENERS);
