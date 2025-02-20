@@ -1,11 +1,9 @@
 package org.teacon.slides.network;
 
 import io.netty.buffer.Unpooled;
-import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import org.teacon.slides.RegistryServer;
@@ -36,16 +34,14 @@ public class ProjectorImageInfoS2CPacket {
         this.str1 = buffer.readString();
     }
 
-    public void sendToClient(ServerWorld level) {
+    public void sendToClient(ServerWorld world) {
         PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
         buffer.writeBlockPos(this.mPos);
         buffer.writeBoolean(this.bl0);
         buffer.writeString(this.str0);
         buffer.writeBoolean(this.bl1);
         buffer.writeString(this.str1);
-        for(ServerPlayerEntity player : PlayerLookup.tracking(level, mPos)) {
-            RegistryServer.sendToPlayer(player, Slideshow.PACKET_TAG_UPDATE, buffer);
-        }
+        Utilities.forPlayersTacking(world, mPos, player -> RegistryServer.sendToPlayer(player, Slideshow.PACKET_TAG_UPDATE, buffer));
     }
 
     public static void handle(MinecraftClient client, PacketByteBuf buffer) {

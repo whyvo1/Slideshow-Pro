@@ -1,9 +1,14 @@
 package org.teacon.slides.util;
 
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.BlockPos;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
 import java.util.Collections;
+import java.util.function.Consumer;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -28,5 +33,14 @@ public class Utilities {
         if(player instanceof ServerPlayerEntity serverPlayer) {
             serverPlayer.networkHandler.sendPacket(new TitleS2CPacket(TitleS2CPacket.Action.ACTIONBAR, message));
         }
+    }
+
+    public static int forPlayersTacking(ServerWorld world, BlockPos pos, Consumer<ServerPlayerEntity> consumer) {
+        int i = 0;
+        for(ServerPlayerEntity player : PlayerLookup.tracking(world, pos)) {
+            consumer.accept(player);
+            i++;
+        }
+        return i;
     }
 }

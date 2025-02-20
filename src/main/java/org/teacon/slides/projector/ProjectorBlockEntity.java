@@ -1,6 +1,7 @@
 package org.teacon.slides.projector;
 
 import io.netty.buffer.Unpooled;
+import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -22,7 +23,7 @@ import org.teacon.slides.network.ProjectorImageInfoS2CPacket;
 import org.teacon.slides.util.Text;
 
 @SuppressWarnings("ConstantConditions")
-public final class ProjectorBlockEntity extends BlockEntity implements Tickable, ExtendedScreenHandlerFactory {
+public final class ProjectorBlockEntity extends BlockEntity implements Tickable, ExtendedScreenHandlerFactory, BlockEntityClientSerializable {
 	public SourceType mSourceType = SourceType.URL;
 	public String mLocation = "";
 	public int mColor = ~0;
@@ -184,7 +185,7 @@ public final class ProjectorBlockEntity extends BlockEntity implements Tickable,
 		mCNextLocation = compoundTag.getString("CNextLocation");
 	}
 
-	public void sync() {
+	public void synch() {
 		new ProjectorImageInfoS2CPacket(this).sendToClient((ServerWorld) this.world);
 	}
 
@@ -208,7 +209,7 @@ public final class ProjectorBlockEntity extends BlockEntity implements Tickable,
 			this.handleReadImage(false);
 			this.needInitContainer = false;
 			this.markDirty();
-			this.sync();
+			this.synch();
 			return;
 		}
 		if(this.needHandleReadImage) {
@@ -219,7 +220,7 @@ public final class ProjectorBlockEntity extends BlockEntity implements Tickable,
 			}
 			this.handleReadImage(this.flipBack);
 			this.markDirty();
-			this.sync();
+			this.synch();
 			this.needHandleReadImage = false;
 			this.flipBack = false;
 		}
@@ -250,5 +251,16 @@ public final class ProjectorBlockEntity extends BlockEntity implements Tickable,
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
 		buf.writeBlockPos(this.pos);
 		return new ProjectorScreenHandler(syncId, buf);
+	}
+
+	@Override
+	public void fromClientTag(NbtCompound tag) {
+		this.loadCompound(tag);
+	}
+
+	@Override
+	public NbtCompound toClientTag(NbtCompound tag) {
+		this.saveCompound(tag);
+		return tag;
 	}
 }

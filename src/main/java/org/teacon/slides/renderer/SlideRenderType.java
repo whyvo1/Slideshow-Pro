@@ -13,6 +13,7 @@ import net.minecraft.util.Identifier;
 public class SlideRenderType extends RenderLayer {
 
 	private static final ImmutableList<RenderPhase> GENERAL_STATES = RenderUtils.getRenderStateShards();
+	private static final String ID_ICON = Slideshow.ID + "icon";
 
 	private final int mHashCode;
 
@@ -28,7 +29,7 @@ public class SlideRenderType extends RenderLayer {
 	}
 
 	SlideRenderType(Identifier texture) {
-		super(Slideshow.ID, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL,
+		super(ID_ICON, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL,
 				RenderUtils.getMode(), 256, false, true,
 				() -> {
 					GENERAL_STATES.forEach(RenderPhase::startDrawing);

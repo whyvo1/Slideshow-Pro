@@ -5,6 +5,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.RenderPhase;
+import org.lwjgl.opengl.GL11;
 
 public abstract class RenderUtils extends RenderLayer {
 
@@ -13,7 +14,7 @@ public abstract class RenderUtils extends RenderLayer {
 	}
 
 	public static int getMode() {
-		return 7;
+		return GL11.GL_QUADS;
 	}
 
 	public static void setShaderColor(float r, float g, float b, float a) {
