@@ -151,11 +151,15 @@ public abstract class Slide implements AutoCloseable {
 		public void render(@NotNull VertexConsumerProvider source, @NotNull Matrix4f matrix,
 						   @NotNull MatrixStack.Entry normal, float width, float height, int color,
 						   int light, int overlay, boolean front, boolean back, long tick, float partialTick) {
-			int alpha = color >>> 24;
-			float factor = getFactor(width, height);
-			int xSize = Math.round(width / factor), ySize = Math.round(height / factor);
-			renderIcon(source, matrix, normal, alpha, light, xSize, ySize, front, back);
-			renderBackground(source, matrix, normal, alpha, light, xSize, ySize, front, back);
+			if(front || back) {
+				int alpha = color >>> 24;
+				if (alpha > 0) {
+					float factor = getFactor(width, height);
+					int xSize = Math.round(width / factor), ySize = Math.round(height / factor);
+					renderIcon(source, matrix, normal, alpha, light, xSize, ySize, front, back);
+					renderBackground(source, matrix, normal, alpha, light, xSize, ySize, front, back);
+				}
+			}
 		}
 
 		private void renderIcon(@NotNull VertexConsumerProvider source, Matrix4f matrix, MatrixStack.Entry normal,
